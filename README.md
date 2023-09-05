@@ -1,1 +1,1 @@
-# scRNAseq_PeyersPatches_IleumVsJejunum
+Scripts used to analyze single-cell RNA sequencing and spatial transcriptomics data.
