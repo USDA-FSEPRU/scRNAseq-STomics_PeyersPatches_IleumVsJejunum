@@ -1,0 +1,194 @@
+---
+title: An R Markdown document converted from "/home/Jayne.Wiarda/SI_PP_SC_ST/Scripts_final/03b_SC_DoubletRemoval_AllSamples.ipynb"
+output: html_document
+---
+
+```{python}
+# import packages & set plotting parameters
+%matplotlib inline
+import scrublet as scr
+import scipy.io
+import matplotlib.pyplot as plt
+import numpy as np
+import os
+import pandas as pd
+plt.rcParams['font.family'] = 'sans-serif'
+plt.rcParams['font.sans-serif'] = 'Arial'
+plt.rc('font', size=14)
+plt.rcParams['pdf.fonttype'] = 42
+```
+
+```{python}
+# read in gene names & count matrix for sample I2
+# note: we had to gunzip matrix.mtx.gz & features.tsv.gz files beforehand
+input_dir = '/project/fsepru/jwiarda/SI_PP_SC_ST/I2onlyFilteredQC/'
+counts_matrix = scipy.io.mmread(input_dir + 'matrix.mtx').T.tocsc()
+genes = np.array(scr.load_genes(input_dir + 'features.tsv', delimiter='\t', column=1))
+print('Counts matrix shape: {} rows, {} columns'.format(counts_matrix.shape[0], counts_matrix.shape[1]))
+print('Number of genes in gene list: {}'.format(len(genes)))
+```
+
+```{python}
+# calculate doublet probabilities with an expected doublet rate of 7.0% and all other parameters at default values
+scrub = scr.Scrublet(counts_matrix, expected_doublet_rate=0.07)
+doublet_scores, predicted_doublets = scrub.scrub_doublets(min_counts=2, min_cells=3, min_gene_variability_pctl=85, n_prin_comps=30)
+scrub.call_doublets(threshold=0.25) # set doublet probability threshold to 0.25 (25.0% probability)
+scrub.plot_histogram();
+```
+
+```{python}
+# plot predicted doublets & doublet scores on UMAPs
+scrub.set_embedding('UMAP', scr.get_umap(scrub.manifold_obs_, 10, min_dist=0.3))
+scrub.plot_embedding('UMAP', order_points=True);
+```
+
+```{python}
+# export doublet probabilities
+np.savetxt('/project/fsepru/jwiarda/SI_PP_SC_ST/Scrublet/I2_ScrubScores.txt', scrub.doublet_scores_obs_, fmt='%.4f')
+```
+
+```{python}
+# read in gene names & count matrix for sample I3
+# note: we had to gunzip matrix.mtx.gz & features.tsv.gz files beforehand
+input_dir = '/project/fsepru/jwiarda/SI_PP_SC_ST/I3onlyFilteredQC/'
+counts_matrix = scipy.io.mmread(input_dir + 'matrix.mtx').T.tocsc()
+genes = np.array(scr.load_genes(input_dir + 'features.tsv', delimiter='\t', column=1))
+print('Counts matrix shape: {} rows, {} columns'.format(counts_matrix.shape[0], counts_matrix.shape[1]))
+print('Number of genes in gene list: {}'.format(len(genes)))
+```
+
+```{python}
+# calculate doublet probabilities with an expected doublet rate of 7.0% and all other parameters at default values
+scrub = scr.Scrublet(counts_matrix, expected_doublet_rate=0.07)
+doublet_scores, predicted_doublets = scrub.scrub_doublets(min_counts=2, min_cells=3, min_gene_variability_pctl=85, n_prin_comps=30)
+scrub.call_doublets(threshold=0.25) # set doublet probability threshold to 0.25 (25.0% probability)
+scrub.plot_histogram();
+```
+
+```{python}
+# plot predicted doublets & doublet scores on UMAPs
+scrub.set_embedding('UMAP', scr.get_umap(scrub.manifold_obs_, 10, min_dist=0.3))
+scrub.plot_embedding('UMAP', order_points=True);
+```
+
+```{python}
+# export doublet probabilities
+np.savetxt('/project/fsepru/jwiarda/SI_PP_SC_ST/Scrublet/I3_ScrubScores.txt', scrub.doublet_scores_obs_, fmt='%.4f')
+```
+
+```{python}
+# read in gene names & count matrix for sample I4
+# note: we had to gunzip matrix.mtx.gz & features.tsv.gz files beforehand
+input_dir = '/project/fsepru/jwiarda/SI_PP_SC_ST/I4onlyFilteredQC/'
+counts_matrix = scipy.io.mmread(input_dir + 'matrix.mtx').T.tocsc()
+genes = np.array(scr.load_genes(input_dir + 'features.tsv', delimiter='\t', column=1))
+print('Counts matrix shape: {} rows, {} columns'.format(counts_matrix.shape[0], counts_matrix.shape[1]))
+print('Number of genes in gene list: {}'.format(len(genes)))
+```
+
+```{python}
+# calculate doublet probabilities with an expected doublet rate of 7.0% and all other parameters at default values
+scrub = scr.Scrublet(counts_matrix, expected_doublet_rate=0.07)
+doublet_scores, predicted_doublets = scrub.scrub_doublets(min_counts=2, min_cells=3, min_gene_variability_pctl=85, n_prin_comps=30)
+scrub.call_doublets(threshold=0.25) # set doublet probability threshold to 0.25 (25.0% probability)
+scrub.plot_histogram();
+```
+
+```{python}
+# plot predicted doublets & doublet scores on UMAPs
+scrub.set_embedding('UMAP', scr.get_umap(scrub.manifold_obs_, 10, min_dist=0.3))
+scrub.plot_embedding('UMAP', order_points=True);
+```
+
+```{python}
+# export doublet probabilities
+np.savetxt('/project/fsepru/jwiarda/SI_PP_SC_ST/Scrublet/I4_ScrubScores.txt', scrub.doublet_scores_obs_, fmt='%.4f')
+```
+
+```{python}
+# read in gene names & count matrix for sample J2
+# note: we had to gunzip matrix.mtx.gz & features.tsv.gz files beforehand
+input_dir = '/project/fsepru/jwiarda/SI_PP_SC_ST/J2onlyFilteredQC/'
+counts_matrix = scipy.io.mmread(input_dir + 'matrix.mtx').T.tocsc()
+genes = np.array(scr.load_genes(input_dir + 'features.tsv', delimiter='\t', column=1))
+print('Counts matrix shape: {} rows, {} columns'.format(counts_matrix.shape[0], counts_matrix.shape[1]))
+print('Number of genes in gene list: {}'.format(len(genes)))
+```
+
+```{python}
+# calculate doublet probabilities with an expected doublet rate of 7.0% and all other parameters at default values
+scrub = scr.Scrublet(counts_matrix, expected_doublet_rate=0.07)
+doublet_scores, predicted_doublets = scrub.scrub_doublets(min_counts=2, min_cells=3, min_gene_variability_pctl=85, n_prin_comps=30)
+scrub.call_doublets(threshold=0.25) # set doublet probability threshold to 0.25 (25.0% probability)
+scrub.plot_histogram();
+```
+
+```{python}
+# plot predicted doublets & doublet scores on UMAPs
+scrub.set_embedding('UMAP', scr.get_umap(scrub.manifold_obs_, 10, min_dist=0.3))
+scrub.plot_embedding('UMAP', order_points=True);
+```
+
+```{python}
+# export doublet probabilities
+np.savetxt('/project/fsepru/jwiarda/SI_PP_SC_ST/Scrublet/J2_ScrubScores.txt', scrub.doublet_scores_obs_, fmt='%.4f')
+```
+
+```{python}
+# read in gene names & count matrix for sample J3
+# note: we had to gunzip matrix.mtx.gz & features.tsv.gz files beforehand
+input_dir = '/project/fsepru/jwiarda/SI_PP_SC_ST/J3onlyFilteredQC/'
+counts_matrix = scipy.io.mmread(input_dir + 'matrix.mtx').T.tocsc()
+genes = np.array(scr.load_genes(input_dir + 'features.tsv', delimiter='\t', column=1))
+print('Counts matrix shape: {} rows, {} columns'.format(counts_matrix.shape[0], counts_matrix.shape[1]))
+print('Number of genes in gene list: {}'.format(len(genes)))
+```
+
+```{python}
+# calculate doublet probabilities with an expected doublet rate of 7.0% and all other parameters at default values
+scrub = scr.Scrublet(counts_matrix, expected_doublet_rate=0.07)
+doublet_scores, predicted_doublets = scrub.scrub_doublets(min_counts=2, min_cells=3, min_gene_variability_pctl=85, n_prin_comps=30)
+scrub.call_doublets(threshold=0.25) # set doublet probability threshold to 0.25 (25.0% probability)
+scrub.plot_histogram();
+```
+
+```{python}
+# plot predicted doublets & doublet scores on UMAPs
+scrub.set_embedding('UMAP', scr.get_umap(scrub.manifold_obs_, 10, min_dist=0.3))
+scrub.plot_embedding('UMAP', order_points=True);
+```
+
+```{python}
+# export doublet probabilities
+np.savetxt('/project/fsepru/jwiarda/SI_PP_SC_ST/Scrublet/J3_ScrubScores.txt', scrub.doublet_scores_obs_, fmt='%.4f')
+```
+
+```{python}
+# read in gene names & count matrix for sample J4
+# note: we had to gunzip matrix.mtx.gz & features.tsv.gz files beforehand
+input_dir = '/project/fsepru/jwiarda/SI_PP_SC_ST/J4onlyFilteredQC/'
+counts_matrix = scipy.io.mmread(input_dir + 'matrix.mtx').T.tocsc()
+genes = np.array(scr.load_genes(input_dir + 'features.tsv', delimiter='\t', column=1))
+print('Counts matrix shape: {} rows, {} columns'.format(counts_matrix.shape[0], counts_matrix.shape[1]))
+print('Number of genes in gene list: {}'.format(len(genes)))
+```
+
+```{python}
+# calculate doublet probabilities with an expected doublet rate of 7.0% and all other parameters at default values
+scrub = scr.Scrublet(counts_matrix, expected_doublet_rate=0.07)
+doublet_scores, predicted_doublets = scrub.scrub_doublets(min_counts=2, min_cells=3, min_gene_variability_pctl=85, n_prin_comps=30)
+scrub.call_doublets(threshold=0.25) # set doublet probability threshold to 0.25 (25.0% probability)
+scrub.plot_histogram();
+```
+
+```{python}
+# plot predicted doublets & doublet scores on UMAPs
+scrub.set_embedding('UMAP', scr.get_umap(scrub.manifold_obs_, 10, min_dist=0.3))
+scrub.plot_embedding('UMAP', order_points=True);
+```
+
+```{python}
+# export doublet probabilities
+np.savetxt('/project/fsepru/jwiarda/SI_PP_SC_ST/Scrublet/J4_ScrubScores.txt', scrub.doublet_scores_obs_, fmt='%.4f')
+```
+
